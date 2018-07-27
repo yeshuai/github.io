@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Maven," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="插件和Maven的关系">
+<meta name="keywords" content="Maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven插件">
+<meta property="og:url" content="https://yeshuai.github.io/2016-9-25-Maven插件/index.html">
+<meta property="og:site_name" content="Austin blog">
+<meta property="og:description" content="插件和Maven的关系">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-10-23T02:50:46.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maven插件">
+<meta name="twitter:description" content="插件和Maven的关系">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://yeshuai.github.io/2016-9-25-Maven插件/"/>
+
+  <title> Maven插件 | Austin blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Austin blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">想的太多,做的太少,中间的落差就是烦恼,要么去做,要么别想...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Maven插件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T14:17:44+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>Maven的核心分发包只有不到3MB的大小，Maven会在需要的时候下载并使用插件，对于插件本身，为了能够复用代码，它往往能够完成多个任务。Maven的生命周期与插件相互绑定，用以完成实际的构建任务。具体而言是生命周期的阶段与插件的目标相互绑定，以完成某个具体的构建任务。</p>
+<h5 id="内置绑定"><a href="#内置绑定" class="headerlink" title="内置绑定"></a>内置绑定</h5><p>Maven在核心为一些主要的生命周期阶段绑定了很多插件的目标</p>
+<hr>
+<p>clean生命周期阶段与插件目标的绑定关系</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">生命周期阶段</th>
+<th>插件目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">pre-clean</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">clean</td>
+<td>maven-clean-plugin:clean</td>
+</tr>
+<tr>
+<td style="text-align:left">post-clean</td>
+</tr>
+</tbody>
+</table>
+<p>site生命周期阶段与插件目标的绑定关系 </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">生命周期阶段</th>
+<th>插件目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">pre-site</td>
+</tr>
+<tr>
+<td style="text-align:left">site</td>
+<td>maven-site-plugin:site</td>
+</tr>
+<tr>
+<td style="text-align:left">post-site</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">site-deploy</td>
+<td>maven-site-plugin:deploy</td>
+</tr>
+</tbody>
+</table>
+<p>default生命周期与内置插件绑定关系及具体任务(打包类型: jar)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">生命周期阶段</th>
+<th>插件目标</th>
+<th style="text-align:left">执行任务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">process-resources</td>
+<td>maven-resources-plugin:resources</td>
+<td style="text-align:left">复制主资源文件至主输出目录</td>
+</tr>
+<tr>
+<td style="text-align:left">compile</td>
+<td>maven-compile-plugin:compile</td>
+<td style="text-align:left">编译主代码至主输出目录</td>
+</tr>
+<tr>
+<td style="text-align:left">process-test-resources</td>
+<td>maven-resources-plugin:testRresources</td>
+<td style="text-align:left">复制测试资源文件至测试输出目录</td>
+</tr>
+<tr>
+<td style="text-align:left">test-compile</td>
+<td>maven-compiler-plugin:testCompile</td>
+<td style="text-align:left">编译测试代码至测试输出目录</td>
+</tr>
+<tr>
+<td style="text-align:left">test</td>
+<td>maven-surefire-plugin:test</td>
+<td style="text-align:left">执行测试用例</td>
+</tr>
+<tr>
+<td style="text-align:left">package</td>
+<td>maven-jar-plugin:jar</td>
+<td style="text-align:left">创建项目jar包</td>
+</tr>
+<tr>
+<td style="text-align:left">install</td>
+<td>maven-install-plugin:install</td>
+<td style="text-align:left">将项目输出构件安装到本地仓库</td>
+</tr>
+<tr>
+<td style="text-align:left">deploy</td>
+<td>maven-deploy-plugin:deploy</td>
+<td style="text-align:left">将项目输出构件部署到远程仓库</td>
+</tr>
+</tbody>
+</table>
+<p>#####自定义绑定<br>自定义绑定允许我们自己掌控插件目标与生命周期的结合、下面以生成项目主代码的源码jar为例。使用到的插件和他的目标为：maven-source-plugin:jar-no-fork、将其绑定到default生命周期阶段verify上（可以任意指定三套生命周期的任意阶段）、在项目的POM配置中<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-source-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>attach-sources<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>verify<span class="tag">&lt;/<span class="name">phase</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span>  </span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>jar-no-fork<span class="tag">&lt;/<span class="name">goal</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上述配置有插件的坐标声明、还有excutions下面每个excution子元素配置的执行的一个个任务、通过phase指定与生命周期的那个阶段绑定、在通过goals指定执行绑定插件的哪些目标。</p>
+<pre><code>当插件的目标绑定到不同的生命周期阶段的时候、插件目标的执行顺序是有生命周期阶段的顺序决定的、当多个插件目标绑定到同一生命周期阶段的时候、顺序是按照插件声明的顺序来决定目标的执行顺序。
+</code></pre><h4 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h4><p>插件配置就是为绑定插件指定其预定义的参数值、来进一步调整插件目标所执行的任务。可以通过命令行和POM中插件全局配置的形式来配置、不是所有的插件配置都可以通过命令行配置的。</p>
+<h5 id="命令行插件配置"><a href="#命令行插件配置" class="headerlink" title="命令行插件配置"></a>命令行插件配置</h5><p>如maven-surefire-plugin插件提供一个maven.test.skip参数、当值为true时会跳过执行测试、命令行执行方式：</p>
+<blockquote>
+<p>mvninstall –Dmaven.test.skip=true<br>        mvn install</p>
+</blockquote>
+<h5 id="POM中插件全局配置"><a href="#POM中插件全局配置" class="headerlink" title="POM中插件全局配置"></a>POM中插件全局配置</h5><p>在声明插件的时候、对此插件进行一个全局配置、后面所有使用该插件的都要遵循这个配置比如指定maven-compile-plugin编译Java1.7版本的源文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的设定会报错、因为本地环境是jdk1.7 、而要求使用1.8版本的编译、将1.8改成1.7就行、并且可以是1.7以前的版本、表示向上兼容以前的版本。（记得编译之前使用 mvn clean 将前面编译的class删除）。</p>
+<h5 id="POM中插件任务配置"><a href="#POM中插件任务配置" class="headerlink" title="POM中插件任务配置"></a>POM中插件任务配置</h5><p>除了为插件配置全局的参数，还可以为某个插件任务配置特定的参数。<br>例如拷贝依赖jar包至target/lib下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">phase</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">                <span class="comment">&lt;!-- $&#123;project.build.directory&#125;为Maven内置变量，缺省为target --&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>$&#123;project.build.directory&#125;/lib<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span>  </span><br><span class="line">                <span class="comment">&lt;!-- 表示是否不包含间接依赖的包 --&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">excludeTransitive</span>&gt;</span>false<span class="tag">&lt;/<span class="name">excludeTransitive</span>&gt;</span>  </span><br><span class="line">                <span class="comment">&lt;!-- 表示复制的jar文件去掉版本信息 --&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">stripVersion</span>&gt;</span>false<span class="tag">&lt;/<span class="name">stripVersion</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="获取插件信息"><a href="#获取插件信息" class="headerlink" title="获取插件信息"></a>获取插件信息</h5><p>比如查看插件目标有哪些参数可以使用、使用方式、示例、常见问题等<br><a href="http://maven.apache.org/plugins/index.html" target="_blank" rel="noopener">网址</a><br><a href="http://repo1.maven.org/maven2/org/apache/maven/plugins/" target="_blank" rel="noopener">下载地址</a></p>
+<h5 id="插件解析机制"><a href="#插件解析机制" class="headerlink" title="插件解析机制"></a>插件解析机制</h5><p>Maven通过插件目标不需要提供完整的插件坐标信息就能解析得到正确的插件、这样简化了插件的使用和配置、但是也让出现问题时更难以定位错误来源。了解解析机制、了解本质。</p>
+<h5 id="插件仓库"><a href="#插件仓库" class="headerlink" title="插件仓库"></a>插件仓库</h5><p>插件与依赖很类似、他们都是在使用的时候会去本地仓库寻找、找不到就到远程仓库找、找到之后下载到本地仓库然后使用、但是插件仓库与依赖仓库是不同的两种仓库、maven会区别对待依赖仓库和插件仓库、当一个插件在本地仓库中找不到时他会到插件仓库去寻找、不会到依赖仓库中寻找。插件仓库的配置与依赖仓库很类似、不同与依赖仓库使用的Repositories和Repository、插件仓库使用的是pluginRepositories和pluginRepository、maven内置了插件仓库配置、也是在超级POM——$M2-HOME/lib/maven-model-builder3.2.3.jar/org/apache/maven/model/pom.xml中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>CentralRepository<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.maven.apache.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">layout</span>&gt;</span>default<span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>never<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>与依赖仓库很类似：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>CentralRepository<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.maven.apache.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">layout</span>&gt;</span>default<span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对比发现、两者仓库就是中央仓库、但是如果没有插件仓库配置、maven在本地找不到插件的时候就不会去中央仓库找所需插件。并且出于稳定性考虑、他关闭了快照版本的插件、和从不更新本地仓库中存在的插件。</p>
+<h5 id="插件默认groupid"><a href="#插件默认groupid" class="headerlink" title="插件默认groupid"></a>插件默认groupid</h5><p>在POM中配置插件如果不配置groupId则表示是maven官方插件、也就是说groupId是org.apache.maven.plugins、这样做没有省多少配置、也会让不熟悉的人感到疑惑、不推荐使用。</p>
+<h5 id="解析插件版本"><a href="#解析插件版本" class="headerlink" title="解析插件版本"></a>解析插件版本</h5><p>Maven也是通过metadata.xml解析版本的、同样maven3在当插件没有声明版本的时候不再解析SNAPSHOT和latest、而是用release。</p>
+<h5 id="解析插件前缀"><a href="#解析插件前缀" class="headerlink" title="解析插件前缀"></a>解析插件前缀</h5><p>Maven可以通过插件前缀:插件目标的方式执行命令、比如clean:clean、会执行maven-clean-plugins:clean、maven是根据*<em>/</em>/plugins/maven-metadata.xml和自己本地仓库中的com/your/plugins/maven-metadata.xml综合、根据前缀获取插件完整信息。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Maven/" rel="tag">#Maven</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-9-24-Maven常用插件配置/" rel="next" title="Maven常用插件配置">
+                <i class="fa fa-chevron-left"></i> Maven常用插件配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-9-25-Maven聚合与继承/" rel="prev" title="Maven聚合与继承">
+                Maven聚合与继承 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/thumb300/697a777cjw1f7kr9or54pj20hs0hswg0.jpg"
+               alt="Austin Ye" />
+          <p class="site-author-name" itemprop="name">Austin Ye</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yeshuai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/55777666/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#插件"><span class="nav-number">1.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#内置绑定"><span class="nav-number">1.1.</span> <span class="nav-text">内置绑定</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插件配置"><span class="nav-number">2.</span> <span class="nav-text">插件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令行插件配置"><span class="nav-number">2.1.</span> <span class="nav-text">命令行插件配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POM中插件全局配置"><span class="nav-number">2.2.</span> <span class="nav-text">POM中插件全局配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POM中插件任务配置"><span class="nav-number">2.3.</span> <span class="nav-text">POM中插件任务配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#获取插件信息"><span class="nav-number">2.4.</span> <span class="nav-text">获取插件信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#插件解析机制"><span class="nav-number">2.5.</span> <span class="nav-text">插件解析机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#插件仓库"><span class="nav-number">2.6.</span> <span class="nav-text">插件仓库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#插件默认groupid"><span class="nav-number">2.7.</span> <span class="nav-text">插件默认groupid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解析插件版本"><span class="nav-number">2.8.</span> <span class="nav-text">解析插件版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解析插件前缀"><span class="nav-number">2.9.</span> <span class="nav-text">解析插件前缀</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Austin Ye</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

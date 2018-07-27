@@ -1,0 +1,713 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Hadoop源码编译">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop 编译">
+<meta property="og:url" content="https://yeshuai.github.io/2016-12-10-Hadoop-编译/index.html">
+<meta property="og:site_name" content="Austin blog">
+<meta property="og:description" content="Hadoop源码编译">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-12-12T00:42:07.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop 编译">
+<meta name="twitter:description" content="Hadoop源码编译">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://yeshuai.github.io/2016-12-10-Hadoop-编译/"/>
+
+  <title> Hadoop 编译 | Austin blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Austin blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">想的太多,做的太少,中间的落差就是烦恼,要么去做,要么别想...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop 编译
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-10T12:46:40+08:00" content="2016-12-10">
+              2016-12-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h5><p>由于Hadoop 提供的源码为32位，而我使用的为64位 Ubuntu，所以需要编译<br>Ubuntu版本为 16.4</p>
+<h4 id="编译源码步骤"><a href="#编译源码步骤" class="headerlink" title="编译源码步骤"></a>编译源码步骤</h4><h5 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h5><p><a href="http://hadoop.apache.org/releases.html" target="_blank" rel="noopener">hadoop releases</a><br>下载版本为： hadoop-2.7.3-src.tar.gz</p>
+<h5 id="解压源码"><a href="#解压源码" class="headerlink" title="解压源码"></a>解压源码</h5><blockquote>
+<p> tar -zxvf hadoop-2.7.3-src.tar.gz</p>
+</blockquote>
+<h5 id="进入源码查看此版本的要求"><a href="#进入源码查看此版本的要求" class="headerlink" title="进入源码查看此版本的要求"></a>进入源码查看此版本的要求</h5><blockquote>
+<p>cd hadoop-2.7.3-src<br>vi BUILDING.txt</p>
+</blockquote>
+<h6 id="文件内容"><a href="#文件内容" class="headerlink" title="文件内容"></a>文件内容</h6><p>配置<br>java version “1.7.0_79”<br>Maven3.3.9<br>ProtocolBuffer 2.5.0</p>
+<blockquote>
+<p>Requirements:</p>
+<ul>
+<li>Unix System</li>
+<li>JDK 1.7+</li>
+<li>Maven 3.0 or later</li>
+<li>Findbugs 1.3.9 (if running findbugs)</li>
+<li>ProtocolBuffer 2.5.0</li>
+<li>CMake 2.6 or newer (if compiling native code), must be 3.0 or newer on Mac</li>
+<li>Zlib devel (if compiling native code)</li>
+<li>openssl devel ( if compiling native hadoop-pipes and to get the best HDFS encryption performance )</li>
+<li>Linux FUSE (Filesystem in Userspace) version 2.6 or above ( if compiling fuse_dfs )</li>
+<li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
+</ul>
+</blockquote>
+<h6 id="protocolBuffer-2-5-0安装"><a href="#protocolBuffer-2-5-0安装" class="headerlink" title="protocolBuffer 2.5.0安装"></a>protocolBuffer 2.5.0安装</h6><p>下载 <a href="http://pan.baidu.com/s/1pJlZubT" target="_blank" rel="noopener">protobuf-2.5.0.tar.gz</a><br>解压 tar -zxvf protobuf-2.5.0.tar.gz<br>执行</p>
+<blockquote>
+<p> ./configure –prefix=/home/hadoop/protobuf/<br>    make &amp;&amp; make install</p>
+</blockquote>
+<p>编译成功后将export PATH= /home/hadoop/protobuf/bin:$PATH加入到环境变量中</p>
+<p>最后输入  protoc –version命令，如显示libprotoc 2.5.0则安装成功</p>
+<h5 id="编译Hadoop"><a href="#编译Hadoop" class="headerlink" title="编译Hadoop"></a>编译Hadoop</h5><p>进入 /home/hadoop/workspace/workspace_hadoop/hadoop-2.7.3-src/目录下<br>执行命令 进入漫长的等待</p>
+<blockquote>
+<p>mvn clean package -Pdist,native -DskipTests -Dtar </p>
+</blockquote>
+<h6 id="hadoop本身问题"><a href="#hadoop本身问题" class="headerlink" title="hadoop本身问题"></a>hadoop本身问题</h6><p>出现错误</p>
+<blockquote>
+<p>[ERROR]   mvn <goals> -rf :hadoop-common</goals></p>
+</blockquote>
+<p>修改hadoop-2.7.3-src/hadoop-common-project/hadoop-auth/pom.xml 文件<br>provided 改为 compile<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- Used, even though 'mvn dependency:analyze' doesn't find it --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-annotations<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--  &lt;scope&gt;provided&lt;/scope&gt;--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="文件夹权限问题"><a href="#文件夹权限问题" class="headerlink" title="文件夹权限问题"></a>文件夹权限问题</h6><p>编译失败</p>
+<blockquote>
+<p>[INFO] Apache Hadoop Tools Dist ……………………… SKIPPED<br>[INFO] Apache Hadoop Tools ………………………….. SKIPPED<br>[INFO] Apache Hadoop Distribution ……………………. SKIPPED<br>[INFO] ————————————————————————<br>[INFO] BUILD FAILURE<br>[INFO] ————————————————————————<br>[INFO] Total time: 29.787 s<br>[INFO] Finished at: 2016-12-11T22:42:33+08:00<br>[INFO] Final Memory: 42M/105M<br>[INFO] ————————————————————————<br>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-clean-plugin:2.5:clean (default-clean) on project hadoop-build-tools: Failed to clean project: Failed to delete /home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools/target/maven-archiver/pom.properties -&gt; [Help 1]<br>[ERROR]<br>[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.<br>[ERROR] Re-run Maven using the -X switch to enable full debug logging.<br>[ERROR]<br>[ERROR] For more information about the errors and possible solutions, please read the following articles:<br>[ERROR] [Help 1] <a href="http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException" target="_blank" rel="noopener">http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException</a><br>[ERROR]<br>[ERROR] After correcting the problems, you can resume the build with the command<br>[ERROR]   mvn <goals> -rf :hadoop-build-tools</goals></p>
+</blockquote>
+<p>查看</p>
+<blockquote>
+<p>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools$ ls -l<br>total 8<br>-rw-r–r– 1 austinye root 3883 Aug 12 11:29 pom.xml<br>drwxr-xr-x 5 root     root 4096 Dec 10 15:04 target<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools/target/maven-archiver$ ls -l<br>total 4<br>-rw-r–r– 1 root root 120 Dec 10 15:04 pom.properties</p>
+</blockquote>
+<p>发现文件竟然是root权限，也是醉了<br>切换到root用户，修改文件权限<br>把该文件夹连同子目录下的所有文件及文件夹给到austinye用户</p>
+<blockquote>
+<p> austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools$ su root<br>Password:<br>root@austinye-VirtualBox:/home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools# chown -R austinye target/<br>root@austinye-VirtualBox:/home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-build-tools# ls -l<br>总用量 8<br>-rw-r–r– 1 austinye root 3883 Aug 12 11:29 pom.xml<br>drwxr-xr-x 5 austinye root 4096 Dec 10 15:04 target</p>
+</blockquote>
+<h6 id="找不到jar-Maven问题"><a href="#找不到jar-Maven问题" class="headerlink" title="找不到jar Maven问题"></a>找不到jar Maven问题</h6><p>切换回当前用户，重新执行命令</p>
+<blockquote>
+<p>mvn clean package -DskipTests -Pdist,native -Dtar</p>
+</blockquote>
+<p>继续报错！！！</p>
+<blockquote>
+<p>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin:1.7:run (make) on project hadoop-common: An Ant BuildException has occured: Execute failed: java.io.IOException: Cannot run program “cmake” (in directory “/home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-common-project/hadoop-common/target/native”): error=2, No such file or directory<br>[ERROR] around Ant part …<exec dir="/home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-common-project/hadoop-common/target/native" executable="cmake" failonerror="true">… @ 4:162 in /home/austinye/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-common-project/hadoop-common/target/antrun/build-main.xml<br>[ERROR] -&gt; [Help 1]<br>[ERROR]<br>[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.<br>[ERROR] Re-run Maven using the -X switch to enable full debug logging.<br>[ERROR]<br>[ERROR] For more information about the errors and possible solutions, please read the following articles:<br>[ERROR] [Help 1] <a href="http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException" target="_blank" rel="noopener">http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException</a></exec></p>
+</blockquote>
+<p>安装 cmake</p>
+<blockquote>
+<p>sudo apt-get install cmake</p>
+</blockquote>
+<p>重新执行继续报错</p>
+<blockquote>
+<p>[ERROR] Failed to execute goal org.apache.avro:avro-maven-plugin:1.7.4:schema (generate-avro-test-sources) on project hadoop-common: Execution generate-avro-test-sources of goal org.apache.avro:avro-maven-plugin:1.7.4:schema failed: Plugin org.apache.avro:avro-maven-plugin:1.7.4 or one of its dependencies could not be resolved: Failed to collect dependencies at org.apache.avro:avro-maven-plugin:jar:1.7.4 -&gt; org.apache.maven:maven-plugin-api:jar:2.0.10: Failed to read artifact descriptor for org.apache.maven:maven-plugin-api:jar:2.0.10: Could not transfer artifact org.apache.maven:maven-plugin-api:pom:2.0.10 from/to central (<a href="https://repo.maven.apache.org/maven2)" target="_blank" rel="noopener">https://repo.maven.apache.org/maven2)</a>: /usr/lib/apache/repo/org/apache/maven/maven-plugin-api/2.0.10/maven-plugin-api-2.0.10.pom.part.lock (No such file or directory) -&gt; [Help 1]</p>
+</blockquote>
+<p>说Maven 仓库缺少jar maven-plugin-api-2.0.10<br>下载之，重新执行<br>找不到jar包</p>
+<blockquote>
+<p>[ERROR] Failed to execute goal on project hadoop-mapreduce-client-jobclient: Could not resolve dependencies for project org.apache.hadoop:hadoop-mapreduce-client-jobclient:jar:2.7.3: Failed to collect dependencies at org.hsqldb:hsqldb:jar:2.0.0: Failed to read artifact descriptor for org.hsqldb:hsqldb:jar:2.0.0: Could not transfer artifact org.hsqldb:hsqldb:pom:2.0.0 from/to central (<a href="https://repo.maven.apache.org/maven2)" target="_blank" rel="noopener">https://repo.maven.apache.org/maven2)</a>: repo.maven.apache.org:443 failed to respond -.apache.org/confluence/display/MAVEN/DependencyResolutionException</p>
+</blockquote>
+<p>把Maven中央仓库换成了阿里云的仓库地址<br>重新编译 成功了，输出如下</p>
+<blockquote>
+<p>[INFO] ————————————————————————<br>[INFO] Reactor Summary:<br>[INFO]<br>[INFO] Apache Hadoop Main …………………………… SUCCESS [ 16.420 s]<br>[INFO] Apache Hadoop Build Tools …………………….. SUCCESS [ 10.575 s]<br>[INFO] Apache Hadoop Project POM …………………….. SUCCESS [  4.903 s]<br>[INFO] Apache Hadoop Annotations …………………….. SUCCESS [ 10.046 s]<br>[INFO] Apache Hadoop Assemblies ……………………… SUCCESS [  0.695 s]<br>[INFO] Apache Hadoop Project Dist POM ………………… SUCCESS [  4.986 s]<br>[INFO] Apache Hadoop Maven Plugins …………………… SUCCESS [ 12.664 s]<br>[INFO] Apache Hadoop MiniKDC ………………………… SUCCESS [02:33 min]<br>[INFO] Apache Hadoop Auth …………………………… SUCCESS [01:01 min]<br>[INFO] Apache Hadoop Auth Examples …………………… SUCCESS [  6.300 s]<br>[INFO] Apache Hadoop Common …………………………. SUCCESS [03:47 min]<br>[INFO] Apache Hadoop NFS ……………………………. SUCCESS [ 13.307 s]<br>[INFO] Apache Hadoop KMS ……………………………. SUCCESS [ 26.156 s]<br>[INFO] Apache Hadoop Common Project ………………….. SUCCESS [  0.213 s]<br>[INFO] Apache Hadoop HDFS …………………………… SUCCESS [03:10 min]<br>[INFO] Apache Hadoop HttpFS …………………………. SUCCESS [ 26.747 s]<br>[INFO] Apache Hadoop HDFS BookKeeper Journal ………….. SUCCESS [ 13.073 s]<br>[INFO] Apache Hadoop HDFS-NFS ……………………….. SUCCESS [  6.938 s]<br>[INFO] Apache Hadoop HDFS Project ……………………. SUCCESS [  0.187 s]<br>[INFO] hadoop-yarn …………………………………. SUCCESS [  0.176 s]<br>[INFO] hadoop-yarn-api ……………………………… SUCCESS [01:51 min]<br>[INFO] hadoop-yarn-common …………………………… SUCCESS [ 49.481 s]<br>[INFO] hadoop-yarn-server …………………………… SUCCESS [  0.207 s]<br>[INFO] hadoop-yarn-server-common …………………….. SUCCESS [ 17.705 s]<br>[INFO] hadoop-yarn-server-nodemanager ………………… SUCCESS [ 31.445 s]<br>[INFO] hadoop-yarn-server-web-proxy ………………….. SUCCESS [  6.407 s]<br>[INFO] hadoop-yarn-server-applicationhistoryservice ……. SUCCESS [ 14.485 s]<br>[INFO] hadoop-yarn-server-resourcemanager …………….. SUCCESS [ 27.401 s]<br>[INFO] hadoop-yarn-server-tests ……………………… SUCCESS [ 10.200 s]<br>[INFO] hadoop-yarn-client …………………………… SUCCESS [ 13.305 s]<br>[INFO] hadoop-yarn-server-sharedcachemanager ………….. SUCCESS [  6.317 s]<br>[INFO] hadoop-yarn-applications ……………………… SUCCESS [  0.162 s]<br>[INFO] hadoop-yarn-applications-distributedshell ………. SUCCESS [  4.278 s]<br>[INFO] hadoop-yarn-applications-unmanaged-am-launcher ….. SUCCESS [  2.923 s]<br>[INFO] hadoop-yarn-site …………………………….. SUCCESS [  0.117 s]<br>[INFO] hadoop-yarn-registry …………………………. SUCCESS [  8.788 s]<br>[INFO] hadoop-yarn-project ………………………….. SUCCESS [  4.893 s]<br>[INFO] hadoop-mapreduce-client ………………………. SUCCESS [  0.421 s]<br>[INFO] hadoop-mapreduce-client-core ………………….. SUCCESS [ 32.291 s]<br>[INFO] hadoop-mapreduce-client-common ………………… SUCCESS [ 25.720 s]<br>[INFO] hadoop-mapreduce-client-shuffle ……………….. SUCCESS [  6.856 s]<br>[INFO] hadoop-mapreduce-client-app …………………… SUCCESS [ 14.971 s]<br>[INFO] hadoop-mapreduce-client-hs ……………………. SUCCESS [ 10.477 s]<br>[INFO] hadoop-mapreduce-client-jobclient ……………… SUCCESS [ 15.742 s]<br>[INFO] hadoop-mapreduce-client-hs-plugins …………….. SUCCESS [  2.983 s]<br>[INFO] Apache Hadoop MapReduce Examples ………………. SUCCESS [ 10.030 s]<br>[INFO] hadoop-mapreduce …………………………….. SUCCESS [  3.313 s]<br>[INFO] Apache Hadoop MapReduce Streaming ……………… SUCCESS [ 11.674 s]<br>[INFO] Apache Hadoop Distributed Copy ………………… SUCCESS [ 15.199 s]<br>[INFO] Apache Hadoop Archives ……………………….. SUCCESS [  3.022 s]<br>[INFO] Apache Hadoop Rumen ………………………….. SUCCESS [  9.954 s]<br>[INFO] Apache Hadoop Gridmix ………………………… SUCCESS [  6.808 s]<br>[INFO] Apache Hadoop Data Join ………………………. SUCCESS [  4.413 s]<br>[INFO] Apache Hadoop Ant Tasks ………………………. SUCCESS [  3.234 s]<br>[INFO] Apache Hadoop Extras …………………………. SUCCESS [  5.970 s]<br>[INFO] Apache Hadoop Pipes ………………………….. SUCCESS [ 12.107 s]<br>[INFO] Apache Hadoop OpenStack support ……………….. SUCCESS [  7.506 s]<br>[INFO] Apache Hadoop Amazon Web Services support ………. SUCCESS [01:01 min]<br>[INFO] Apache Hadoop Azure support …………………… SUCCESS [ 16.021 s]<br>[INFO] Apache Hadoop Client …………………………. SUCCESS [  8.804 s]<br>[INFO] Apache Hadoop Mini-Cluster ……………………. SUCCESS [  2.142 s]<br>[INFO] Apache Hadoop Scheduler Load Simulator …………. SUCCESS [  8.385 s]<br>[INFO] Apache Hadoop Tools Dist ……………………… SUCCESS [  8.682 s]<br>[INFO] Apache Hadoop Tools ………………………….. SUCCESS [  0.092 s]<br>[INFO] Apache Hadoop Distribution ……………………. SUCCESS [ 43.672 s]<br>[INFO] ————————————————————————<br>[INFO] BUILD SUCCESS<br>[INFO] ————————————————————————<br>[INFO] Total time: 24:23 min<br>[INFO] Finished at: 2016-12-12T08:31:14+08:00<br>[INFO] Final Memory: 225M/760M<br>[INFO] ————————————————————————</p>
+</blockquote>
+<h6 id="查看需要文件是否存在"><a href="#查看需要文件是否存在" class="headerlink" title="查看需要文件是否存在"></a>查看需要文件是否存在</h6><p>hadoop-2.7.3-src/hadoop-dist/target/hadoop-2.7.3.tar.gz</p>
+<blockquote>
+<p>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src$ cd hadoop-dist/<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist$ ls<br>pom.xml  target<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist$ cd target/<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target$ ls<br>antrun                         hadoop-dist-2.7.3-sources.jar<br>classes                        hadoop-dist-2.7.3-test-sources.jar<br>dist-layout-stitching.sh       javadoc-bundle-options<br>dist-tar-stitching.sh          maven-archiver<br>hadoop-2.7.3                   maven-shared-archive-resources<br>hadoop-2.7.3.tar.gz            test-classes<br>hadoop-dist-2.7.3.jar          test-dir<br>hadoop-dist-2.7.3-javadoc.jar<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target$ cd hadoop-2.7.3/<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target/hadoop-2.7.3$ ls<br>bin  include  libexec      NOTICE.txt  sbin<br>etc  lib      LICENSE.txt  README.txt  share<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target/hadoop-2.7.3$ cd lib<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target/hadoop-2.7.3/lib$ cd native/<br>austinye@austinye-VirtualBox:~/workspace/workspace_hadoop/hadoop-2.7.3-src/hadoop-dist/target/hadoop-2.7.3/lib/native$ ls<br>libhadoop.a       libhadoop.so        libhadooputils.a  libhdfs.so<br>libhadooppipes.a  libhadoop.so.1.0.0  libhdfs.a         libhdfs.so.0.0.0</p>
+</blockquote>
+<p>#####总结<br>一般都是插件和Maven问题，严格按编译要求安装工具，或者根据错误提示进行处理。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-11-26-Hadoop序章/" rel="next" title="Hadoop续章">
+                <i class="fa fa-chevron-left"></i> Hadoop续章
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-12-11-Windows常用cmd命令/" rel="prev" title="Windows常用cmd命令">
+                Windows常用cmd命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/thumb300/697a777cjw1f7kr9or54pj20hs0hswg0.jpg"
+               alt="Austin Ye" />
+          <p class="site-author-name" itemprop="name">Austin Ye</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yeshuai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/55777666/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译源码步骤"><span class="nav-number"></span> <span class="nav-text">编译源码步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#下载源码"><span class="nav-number">1.</span> <span class="nav-text">下载源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解压源码"><span class="nav-number">2.</span> <span class="nav-text">解压源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进入源码查看此版本的要求"><span class="nav-number">3.</span> <span class="nav-text">进入源码查看此版本的要求</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#文件内容"><span class="nav-number">3.1.</span> <span class="nav-text">文件内容</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#protocolBuffer-2-5-0安装"><span class="nav-number">3.2.</span> <span class="nav-text">protocolBuffer 2.5.0安装</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译Hadoop"><span class="nav-number">4.</span> <span class="nav-text">编译Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hadoop本身问题"><span class="nav-number">4.1.</span> <span class="nav-text">hadoop本身问题</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#文件夹权限问题"><span class="nav-number">4.2.</span> <span class="nav-text">文件夹权限问题</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#找不到jar-Maven问题"><span class="nav-number">4.3.</span> <span class="nav-text">找不到jar Maven问题</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#查看需要文件是否存在"><span class="nav-number">4.4.</span> <span class="nav-text">查看需要文件是否存在</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Austin Ye</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

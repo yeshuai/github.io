@@ -1,0 +1,681 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="书籍《Hadoop海量数据处理技术详解与项目实战》摘抄">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop 整体了解">
+<meta property="og:url" content="https://yeshuai.github.io/2016-11-6-Hadoop-整体了解/index.html">
+<meta property="og:site_name" content="Austin blog">
+<meta property="og:description" content="书籍《Hadoop海量数据处理技术详解与项目实战》摘抄">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-11-12T03:30:44.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop 整体了解">
+<meta name="twitter:description" content="书籍《Hadoop海量数据处理技术详解与项目实战》摘抄">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://yeshuai.github.io/2016-11-6-Hadoop-整体了解/"/>
+
+  <title> Hadoop 整体了解 | Austin blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Austin blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">想的太多,做的太少,中间的落差就是烦恼,要么去做,要么别想...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop 整体了解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-06T14:04:58+08:00" content="2016-11-06">
+              2016-11-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="概念解释"><a href="#概念解释" class="headerlink" title="概念解释"></a>概念解释</h4><h5 id="什么是大数据"><a href="#什么是大数据" class="headerlink" title="什么是大数据"></a>什么是大数据</h5><blockquote>
+<p>IBM说：可以用三个特征相结合来定义大数据：数量(Volume)、种类(Variety)和速度(Velocity),简称3V，即庞大的数量、极快的速度和种类丰富的数据</p>
+</blockquote>
+<h5 id="大数据平台"><a href="#大数据平台" class="headerlink" title="大数据平台"></a>大数据平台</h5><ol>
+<li><strong>Hadoop</strong></li>
+<li>Storm 流数据平台</li>
+<li>Apache Spark</li>
+</ol>
+<h5 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h5><h6 id="什么是Hadoop"><a href="#什么是Hadoop" class="headerlink" title="什么是Hadoop"></a>什么是Hadoop</h6><blockquote>
+<p>Hadoop是由一系列软件组成的框架，其中有</p>
+<ol>
+<li>Hadoop Common</li>
+<li>HDFS</li>
+<li>MapReduce</li>
+<li>HBase</li>
+<li>ZooKeeper</li>
+<li>Hive</li>
+<li>Pig</li>
+<li>Impala</li>
+<li>Mahout</li>
+<li>Flume</li>
+<li>Sqoop</li>
+</ol>
+</blockquote>
+<h6 id="Hadoop的三种运行模式"><a href="#Hadoop的三种运行模式" class="headerlink" title="Hadoop的三种运行模式"></a>Hadoop的三种运行模式</h6><ol>
+<li>单机模式：如果在不进行任何配置的情况下，这是Hadoop的默认模式，在这种模式下，所有的守护进程，如NameNode、DataNode、TaskTracker、JobTracker、都变成了一个Java进程</li>
+<li>伪分布模式：在这种模式下，所有的守护进程都运行在一个节点上，这种模式在一个节点上模拟了一个具有Hadoop完整功能的微型集群</li>
+<li>完全分布模式： 在这种模式下，Hadoop的守护进程运行在多个节点上，形成一个真正意义上的集群</li>
+</ol>
+<h5 id="大数据的结构类型"><a href="#大数据的结构类型" class="headerlink" title="大数据的结构类型"></a>大数据的结构类型</h5><p>大数据的结果类型分为<strong>结构化、半结构化、准结果化和非结构化</strong></p>
+<h6 id="结构化"><a href="#结构化" class="headerlink" title="结构化"></a>结构化</h6><p>预定义的数据类型、格式和结构的数据</p>
+<h6 id="半结构化"><a href="#半结构化" class="headerlink" title="半结构化"></a>半结构化</h6><p>具有可识别的模式并可以解析的文本数据文件</p>
+<h6 id="准结果化"><a href="#准结果化" class="headerlink" title="准结果化"></a>准结果化</h6><p>具有不规则数据格式的文本数据，使用工具可以使之格式化</p>
+<h6 id="非结构化"><a href="#非结构化" class="headerlink" title="非结构化"></a>非结构化</h6><p>没有固定结构的数据，通常保存为不同的数据文件。例如文本文档、PDF文档、图像和视频等。</p>
+<h5 id="大数据挖掘的步骤"><a href="#大数据挖掘的步骤" class="headerlink" title="大数据挖掘的步骤"></a>大数据挖掘的步骤</h5><ol>
+<li>数据清洗：清除噪声和删除不一致的数据</li>
+<li>数据集成：多种数据源可以组合在一起</li>
+<li>数据选择：从数据库中提取与分析任务相关的数据</li>
+<li>数据交换：通过汇总或聚集操作，把数据交换和统一成适合挖掘的形式</li>
+<li>数据挖掘：基本步骤，使用智能方法提取数据模式</li>
+<li>模式评估：根据某种兴趣度量、识别代表知识的真正有趣模式</li>
+<li>知识表示：使用可视化和知识表示技术，仙湖用提供挖掘的知识(我理解为BI)</li>
+</ol>
+<h5 id="数据仓库的概念"><a href="#数据仓库的概念" class="headerlink" title="数据仓库的概念"></a>数据仓库的概念</h5><p>数据仓库的主要特征用四个关键字概括，面向主题的、集成的、时变得、非易失的。</p>
+<h6 id="面向主题的-subject-oriented"><a href="#面向主题的-subject-oriented" class="headerlink" title="面向主题的(subject-oriented)"></a>面向主题的(subject-oriented)</h6><p>数据仓库围绕一些重要的主题，如顾客、供应商、产品和销售组织。关注决策者的数据建模和分析，和不是单位的日常操作和事务处理，因此数据仓库通常排除对于决策无用的数据，提供特定主题的简明视图</p>
+<h6 id="集成的-integrated"><a href="#集成的-integrated" class="headerlink" title="集成的(integrated)"></a>集成的(integrated)</h6><p>构造数据仓库的是将多个异构数据源，如关系型数据库、一般文件和联机事物处理记录集成在一起。使用数据清理和数据集成技术，确保命名约定、编码结构、属性度量等的一致性</p>
+<h6 id="时变的-time-variant"><a href="#时变的-time-variant" class="headerlink" title="时变的(time-variant)"></a>时变的(time-variant)</h6><p>数据仓库从历史的角度(例如，过去5~10年)提供信息。数据仓库中的关键结构都隐式或者显式的包含时间元素</p>
+<h6 id="非易失的-nonvolatile"><a href="#非易失的-nonvolatile" class="headerlink" title="非易失的(nonvolatile)"></a>非易失的(nonvolatile)</h6><p>数据仓库是物理分离存放的数据，不需要事务处理、恢复和并发控制机制。？</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-11-6-ubuntu16-04-jdk安装/" rel="next" title="ubuntu16.04 jdk安装">
+                <i class="fa fa-chevron-left"></i> ubuntu16.04 jdk安装
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-11-6-与爱因斯坦月球漫步/" rel="prev" title="与爱因斯坦月球漫步">
+                与爱因斯坦月球漫步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/thumb300/697a777cjw1f7kr9or54pj20hs0hswg0.jpg"
+               alt="Austin Ye" />
+          <p class="site-author-name" itemprop="name">Austin Ye</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yeshuai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/55777666/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念解释"><span class="nav-number">1.</span> <span class="nav-text">概念解释</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是大数据"><span class="nav-number">1.1.</span> <span class="nav-text">什么是大数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#大数据平台"><span class="nav-number">1.2.</span> <span class="nav-text">大数据平台</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hadoop"><span class="nav-number">1.3.</span> <span class="nav-text">Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#什么是Hadoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是Hadoop</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Hadoop的三种运行模式"><span class="nav-number">1.3.2.</span> <span class="nav-text">Hadoop的三种运行模式</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#大数据的结构类型"><span class="nav-number">1.4.</span> <span class="nav-text">大数据的结构类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#结构化"><span class="nav-number">1.4.1.</span> <span class="nav-text">结构化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#半结构化"><span class="nav-number">1.4.2.</span> <span class="nav-text">半结构化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#准结果化"><span class="nav-number">1.4.3.</span> <span class="nav-text">准结果化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非结构化"><span class="nav-number">1.4.4.</span> <span class="nav-text">非结构化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#大数据挖掘的步骤"><span class="nav-number">1.5.</span> <span class="nav-text">大数据挖掘的步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据仓库的概念"><span class="nav-number">1.6.</span> <span class="nav-text">数据仓库的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#面向主题的-subject-oriented"><span class="nav-number">1.6.1.</span> <span class="nav-text">面向主题的(subject-oriented)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#集成的-integrated"><span class="nav-number">1.6.2.</span> <span class="nav-text">集成的(integrated)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#时变的-time-variant"><span class="nav-number">1.6.3.</span> <span class="nav-text">时变的(time-variant)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#非易失的-nonvolatile"><span class="nav-number">1.6.4.</span> <span class="nav-text">非易失的(nonvolatile)</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Austin Ye</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

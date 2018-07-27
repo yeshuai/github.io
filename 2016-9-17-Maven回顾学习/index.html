@@ -1,0 +1,662 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Maven," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="刚开始工作就开始使用Maven，了解Maven，但没有进行梳理、归纳和总结，第一篇关于Maven的说明">
+<meta name="keywords" content="Maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven回顾学习">
+<meta property="og:url" content="https://yeshuai.github.io/2016-9-17-Maven回顾学习/index.html">
+<meta property="og:site_name" content="Austin blog">
+<meta property="og:description" content="刚开始工作就开始使用Maven，了解Maven，但没有进行梳理、归纳和总结，第一篇关于Maven的说明">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-09-27T02:21:16.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maven回顾学习">
+<meta name="twitter:description" content="刚开始工作就开始使用Maven，了解Maven，但没有进行梳理、归纳和总结，第一篇关于Maven的说明">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://yeshuai.github.io/2016-9-17-Maven回顾学习/"/>
+
+  <title> Maven回顾学习 | Austin blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Austin blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">想的太多,做的太少,中间的落差就是烦恼,要么去做,要么别想...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Maven回顾学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T10:29:48+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="什么是Maven"><a href="#什么是Maven" class="headerlink" title="什么是Maven"></a>什么是Maven</h5><blockquote>
+<p>Maven 属于Apache组织中一个较为成功的开源项目，主要服务于基于Java平台的<strong>项目构建</strong>、<strong>依赖管理</strong>和<strong>项目信息管理</strong>工具。</p>
+</blockquote>
+<h6 id="什么是项目构建"><a href="#什么是项目构建" class="headerlink" title="什么是项目构建"></a>什么是项目构建</h6><blockquote>
+<p>编译、运行单元测试、生成文档、打包和部署等繁琐且重复性程度很高的工作，就是构建</p>
+</blockquote>
+<h6 id="什么是依赖管理"><a href="#什么是依赖管理" class="headerlink" title="什么是依赖管理"></a>什么是依赖管理</h6><blockquote>
+<p>在这个开源的年代里，几乎所有的Java应用都会借用一些第三方的开源类库，这些第三方的开源类库都可以通过依赖的方式引入到项目中，随着依赖的增多，类库版本的不一致，版本之间的冲突，都需要手工去解决，删除有冲突的类库jar，Maven通过一个坐标定位系统来定义每一个构建，通过一组坐标找到任何一个Java类库(如Jar文件)，来轻松的对类库依赖进行管理</p>
+</blockquote>
+<h6 id="什么是信息管理"><a href="#什么是信息管理" class="headerlink" title="什么是信息管理"></a>什么是信息管理</h6><blockquote>
+<p>分散在项目中的项目描述、开发者列表，许可证、缺陷管理系统等项目信息进行统一的管理，还可以通过Maven 的插件，获取项目文档、测试报告、代码覆盖率报告、源码版本日志报告等项目信息</p>
+</blockquote>
+<h5 id="Maven安装目录分析"><a href="#Maven安装目录分析" class="headerlink" title="Maven安装目录分析"></a>Maven安装目录分析</h5><p><em>Maven 安装目录有(以版本3.0.5 为例)</em></p>
+<blockquote>
+</blockquote>
+<ol>
+<li>bin &lt;包含mvn运行脚本，脚本用来配置Java命令，执行Java命令；mvnDebug为在运行Maven时启用debug，以便于调试&gt;</li>
+<li>boot  &lt;目录中有 plexus-classworlds-2.4.jar 是一个类加载器，使用该框架加载自己的类库&gt;</li>
+<li>conf  &lt;此目录中有及其重要的settings.xml配置文件&gt;</li>
+<li>lib  &lt;此目录下包含Maven的重要文件settings.xml&gt;</li>
+<li>LICENSE.txt</li>
+<li>NOTICE.txt</li>
+<li>README.txt</li>
+</ol>
+<h5 id="如何为Maven设置代理"><a href="#如何为Maven设置代理" class="headerlink" title="如何为Maven设置代理"></a>如何为Maven设置代理</h5><p><strong>编辑~/conf/settings.xml 文件</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">proxies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">proxy</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>my-proxy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">active</span>&gt;</span>true<span class="tag">&lt;/<span class="name">active</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="name">protocol</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">host</span>&gt;</span>ip地址<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">port</span>&gt;</span>端口<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--&lt;username&gt;proxyuser&lt;/username&gt;</span></span><br><span class="line"><span class="comment">      &lt;password&gt;proxypass&lt;/password&gt;</span></span><br><span class="line"><span class="comment">      &lt;nonProxyHosts&gt;local.net|some.host.com&lt;/nonProxyHosts&gt;--&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">proxy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">proxies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h6><blockquote>
+<p>proxies 下可以有多个 proxy元素，如果声明了多个proxy元素，则默认情况下第一个被激活的proxy会生效。这里声明一个id为my-proxy的代理，active的值为true表示激活该代理，protocol表示使用的代理协议，这里是http。指定正确的主机名[host]和端口[prot]。<br>注释掉的 username和password、nonProxyHosts几个元素，当服务器需要认证时，就需要配置代理，分别是用户名、用户密码、哪些主机不需要代理，使用“|”分隔多个主机名</p>
+</blockquote>
+<p><em>总结自书籍 《Maven实战》</em></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Maven/" rel="tag">#Maven</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-9-16-幸福课笔记-逆境还是机遇/" rel="next" title="幸福课笔记-逆境还是机遇">
+                <i class="fa fa-chevron-left"></i> 幸福课笔记-逆境还是机遇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-9-18-欲买桂花同载酒/" rel="prev" title="欲买桂花同载酒">
+                欲买桂花同载酒 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/thumb300/697a777cjw1f7kr9or54pj20hs0hswg0.jpg"
+               alt="Austin Ye" />
+          <p class="site-author-name" itemprop="name">Austin Ye</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yeshuai" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/55777666/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是Maven"><span class="nav-number">1.</span> <span class="nav-text">什么是Maven</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#什么是项目构建"><span class="nav-number">1.1.</span> <span class="nav-text">什么是项目构建</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#什么是依赖管理"><span class="nav-number">1.2.</span> <span class="nav-text">什么是依赖管理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#什么是信息管理"><span class="nav-number">1.3.</span> <span class="nav-text">什么是信息管理</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Maven安装目录分析"><span class="nav-number">2.</span> <span class="nav-text">Maven安装目录分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何为Maven设置代理"><span class="nav-number">3.</span> <span class="nav-text">如何为Maven设置代理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#说明"><span class="nav-number">3.1.</span> <span class="nav-text">说明</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Austin Ye</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
